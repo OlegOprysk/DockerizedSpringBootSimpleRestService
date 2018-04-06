@@ -1,0 +1,60 @@
+version: '3'
+services:
+  consul_server:
+    image: consul
+    container_name: consul_server
+    command: consul agent -dev
+    environment:
+        - CONSUL_CLIENT_INTERFACE=eth0
+        - CONSUL_BIND_INTERFACE=eth0
+    command: agent -server -bootstrap -ui
+    ports:
+      - "8300:8300"
+      - "8301:8301"
+      - "8302:8302"
+      - "8600:8600"
+      - "8500:8500"
+  git2consul:
+    container_name: git2consul
+    depends_on:
+      - consul_server
+    image: cimpress/git2consul:latest
+    volumes:
+      - C:\Users\Oleg_Oprysk\git\practice_consul\git_config\git2consulJsonConfig:/etc/git2consul.d
+    links:
+      - "consul_server"
+    command: --endpoint consul_server --port 8500 --config-file /etc/git2consul.d/config.json
+
+
+  sb_app1:
+    image:  com.olegoprysk/sb-app:latest
+    environment:
+      - SPRING_PROFILES_ACTIVE=test
+    links:
+      - "consul_server"
+    ports:
+      - "9000:8080"
+  sb_app2:
+    image:  com.olegoprysk/sb-app:latest
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+    links:
+      - "consul_server"
+    ports:
+      - "9001:8080"
+  sb_app3:
+    image:  com.olegoprysk/sb-app:latest
+    environment:
+      - SPRING_PROFILES_ACTIVE=uat
+    links:
+      - "consul_server"
+    ports:
+      - "9002:8080"
+  sb_app4:
+    image:  com.olegoprysk/sb-app:latest
+    environment:
+      - SPRING_PROFILES_ACTIVE=
+    links:
+      - "consul_server"
+    ports:
+      - "9003:8080"
