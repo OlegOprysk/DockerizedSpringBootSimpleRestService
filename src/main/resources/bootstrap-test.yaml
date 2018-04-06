@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: springBoot
+  cloud:
+    bus:
+      enabled: false
+    consul:
+      enabled: false
+      config:
+        enabled: false
+      discovery:
+        enabled: false

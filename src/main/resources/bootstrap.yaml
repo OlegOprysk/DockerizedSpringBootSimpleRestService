@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: springBoot
+  cloud:
+    consul:
+      host: 10.25.9.220
+      port: 8500
+      config:
+        defaultContext: 'springBoot/jsons'
+        enabled: true
+        profileSeparator: '/'
+        watch:
+          delay: 1000
+          enabled: true
+          wait-time: 1
+        name: springBoot/settings
