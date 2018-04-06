@@ -13,7 +13,7 @@ import java.util.UUID;
 @RestController
 public class IndexController {
     public static final UUID uuid = UUID.randomUUID();
-    public static final String pattern = "UUID::%s</br>" +
+    public static final String PATTERN = "UUID::%s</br>" +
             "Variable_perProfile::%s</br>" +
             "Variable_common::%s</br>" +
             "Profile::%s</br>" +
@@ -22,19 +22,19 @@ public class IndexController {
     @Autowired
     private Environment environment;
 
-    @Value("${app.test.prop:test}")
+    @Value("${app.test.prop}")
     public String variable;
 
-    @Value("${app.common.variable:test}")
+    @Value("${app.common.variable}")
     public String commonVariable;
 
 
-    @Value("${config:{}}")
+    @Value("${config}")
     public String jsonFile;
 
     @RequestMapping("/")
     public String index(){
         String[] activeProfiles = environment.getActiveProfiles();
-        return String.format(pattern, uuid, variable, commonVariable,  activeProfiles.length > 0 ? activeProfiles[0]:"none", jsonFile);
+        return String.format(PATTERN, uuid, variable, commonVariable,  activeProfiles.length > 0 ? activeProfiles[0]:"none", jsonFile);
     }
 }
