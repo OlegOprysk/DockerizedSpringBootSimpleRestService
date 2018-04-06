@@ -10,3 +10,9 @@ spring:
         enabled: false
       discovery:
         enabled: false
+config: Local Test property
+app:
+  common:
+    variable: Local Test property [app.common.variable]
+  test:
+    prop: Local Test propert [app.common.test.prop]

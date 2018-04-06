@@ -3,7 +3,7 @@ spring:
     name: springBoot
   cloud:
     consul:
-      host: 10.25.9.220
+      host: consul_server
       port: 8500
       config:
         defaultContext: 'springBoot/jsons'
